@@ -58,6 +58,15 @@ userSchema.methods.addToCart = function (product) {
 
 }
 
+userSchema.methods.removeFromCart = function(productId) {
+  const updatedCartItems = this.cart.items.filter(item => {
+    return item.productId.toString() !== productId.toString() ;
+  });
+
+  this.cart.items = updatedCartItems;
+  return this.save();
+
+}
 
 module.exports = mongoose.model('User' , userSchema);
 
@@ -137,19 +146,19 @@ module.exports = mongoose.model('User' , userSchema);
 //         });
 //     }
 
-//     deleteItemFromCart(productId) {
-//       const updatedCartItems = this.cart.items.filter(item => {
-//         return item.productId.toString() !== productId.toString() ;
-//       });
+    // deleteItemFromCart(productId) {
+    //   const updatedCartItems = this.cart.items.filter(item => {
+    //     return item.productId.toString() !== productId.toString() ;
+    //   });
 
-//       // update database
-//       const db = getDb();
-//       return db.collection('users')
-//         .updateOne(
-//           { _id : new ObjectId(this._id)} , 
-//           { $set : {cart : {items : updatedCartItems}}}
-//         );
-//       }
+    //   // update database
+    //   const db = getDb();
+    //   return db.collection('users')
+    //     .updateOne(
+    //       { _id : new ObjectId(this._id)} , 
+    //       { $set : {cart : {items : updatedCartItems}}}
+    //     );
+    //   }
 
 //     addOrder() {
 //       const db = getDb();
